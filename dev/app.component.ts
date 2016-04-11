@@ -1,4 +1,5 @@
 import {Component} from 'angular2/core';
+import {StringInterpolationComponent} from './string-interpolation.component.ts';
 
 @Component({
     // this is how we embed this component in html.  It inserts the "template" instead of the directive/component tag.  We do this with
@@ -12,7 +13,9 @@ import {Component} from 'angular2/core';
     template: `
         <h1>Angular 2 Boilerplate</h1>
         <p>Hello World! yeah! THis is cool</p>
-    `
+        <string-interpolation></string-interpolation>
+    `,
+    directives: [StringInterpolationComponent]
 })
 
 
