@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <!--sets base url for our app (in this case, the root dir).  If your routes are in a sub dir, you would add it to the href-->
     <base href="/">
     <title>Angular 2 Boilerplate</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,17 +21,24 @@
     <link rel="stylesheet" href="src/css/app.css">
 </head>
 <body>
+    <!-- this will be our root element for our app.
+    The other components can then be nested within this component
+    This creates a hierarchy, with only one root component-->
 <my-app>Loading...</my-app>
 
+
+<!-- loads up files that we write.-->
 <script>
     System.config({
         packages: {
+            /* this is the folder where our files live */
             app: {
                 format: 'register',
                 defaultExtension: 'js'
             }
         }
     });
+    /* this is the file which starts everything up --> app.boot.js */
     System.import('app/boot')
             .then(null, console.error.bind(console));
 </script>
