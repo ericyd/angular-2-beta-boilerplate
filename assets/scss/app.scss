@@ -4,3 +4,26 @@ body {
   font-family: "Roboto", Arial, sans-serif;
   font-size: 16px;
 }
+
+
+.some-class {
+    font-weight:bold;
+}
+
+.red {
+    @extend .some-class;
+    color: red;
+}
+
+.parent {
+    border: 1px solid #ccc;
+    background: #eee;
+    padding: 10px;
+}
+
+.child {
+    border: 1px solid black;
+    background: #ccc;
+    padding: 10px;
+    
+}
