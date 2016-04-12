@@ -25,9 +25,16 @@ import {PropertyBinding2Component} from './property-binding2.component';
             <input type="text" [(ngModel)]="name">
             <br><br>
             <section class="child">
-                <property-binding2 [myName]="name" [myAge]="26"></property-binding2>
+                <property-binding2 
+                [myName]="name" 
+                [myAge]="26"
+                (hobbiesChanged)="hobbies = $event"></property-binding2>
             </section>
         </section>
+        
+        <p>My hobbies are {{hobbies}}</p>
+            
+        
         
         <h1>String Interpolation</h1>
         <string-interpolation></string-interpolation>
@@ -45,4 +52,5 @@ import {PropertyBinding2Component} from './property-binding2.component';
 
 export class AppComponent {
     name = '';
+    hobbies = '';
 }

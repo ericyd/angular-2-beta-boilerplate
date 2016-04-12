@@ -13,7 +13,7 @@ import {Component} from 'angular2/core';
         <p>Your name is {{name}}</p>
         Note: this doesn't update the other "name" interpolation in other components, because the data from this component is 
         separate from the other components
-    `
+    ` 
 })
 
 export class TwoWayDatabindingComponent {
