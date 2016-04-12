@@ -14,3 +14,16 @@ body {
     @extend .some-class;
     color: red;
 }
+
+.parent {
+    border: 1px solid #ccc;
+    background: #eee;
+    padding: 10px;
+}
+
+.child {
+    border: 1px solid black;
+    background: #ccc;
+    padding: 10px;
+    
+}
