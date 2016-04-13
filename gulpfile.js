@@ -62,4 +62,6 @@ gulp.task('watch', function () {
     gulp.watch(assetsDev + 'img/*', ['build-img']);
 });
 
+// TODO: figure out todo
+
 gulp.task('default', ['watch', 'build-ts', 'build-css']);

@@ -16,8 +16,9 @@ import {InputComponent} from './bindings/input.component';
     directives: [InputComponent],
 })
 
+// TODO: figure out how to use Webstorm todo
 
- 
+
 export class AppComponent {
     myself = {name: '', age: ''};
     confirmedMyself = {name: '', age: ''};
