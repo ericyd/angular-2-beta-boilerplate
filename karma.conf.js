@@ -15,6 +15,17 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      // paths loaded by Karma
+      {pattern: 'node_modules/systemjs/dist/system-polyfills.js', included: true, watched: true},
+      {pattern: 'node_modules/systemjs/dist/system.src.js', included: true, watched: true},
+      {pattern: 'node_modules/es6-shim/es6-shim.js', included: true, watched: true},
+      {pattern: 'node_modules/angular2/bundles/angular2-polyfills.js', included: true, watched: true},
+      {pattern: 'node_modules/rxjs/bundles/Rx.js', included: true, watched: true},
+      {pattern: 'node_modules/angular2/bundles/angular2.js', included: true, watched: true},
+      {pattern: 'node_modules/angular2/bundles/testing.dev.js', included: true, watched: true},
+
+      {pattern: 'karma-test-shim.js', included: true, watched: true},
+      {pattern: 'app/test/matchers.js', included: true, watched: true},
       'test/**/*.ts'
     ],
 

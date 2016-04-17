@@ -10,10 +10,10 @@ import {Component, EventEmitter} from 'angular2/core';
             <label for="name">Your name</label>
             <input type="text" id="name" [(ngModel)]="myself.name" (keyup)="onKeyUp()">
         </div>
-        
+
         <div>
-            <label for="age">You age</label>
-            <input type="text" id="name" [(ngModel)]="myself.age" (keyup)="onKeyUp()">
+            <label for="age">Your age</label>
+            <input type="text" id="age" [(ngModel)]="myself.age" (keyup)="onKeyUp()">
         </div>
         <br>
         <div>Filled out: {{isFilled ? 'Yes' : 'No'}}</div>
@@ -22,15 +22,15 @@ import {Component, EventEmitter} from 'angular2/core';
         <button [disabled]="!isValid" (click)="onConfirm()">Confirm</button>
     `,
     inputs: ['myself'],
-    output: ['confirmed']
+    outputs: ['confirmed']
     
 })
 
 export class ConfirmComponent {
     myself = {
-        "name": "",
-        "age": ""
-    }
+        name: "",
+        age: ""
+    };
     isFilled = false;
     isValid = false;
     confirmed = new EventEmitter<{name: string, age: string}>();
