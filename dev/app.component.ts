@@ -27,26 +27,26 @@ import {ConfirmComponent} from './bindings/confirm.component';
 export class AppComponent {
     myself = {name: '', age: ''};
     confirmedMyself = {name: '', age: ''};
-    
+
     onSubmit(myself:{name:string, age:string}) {
         // for (let key in this.myself) {
         //     this.myself[key] = myself[key];
         // }
-        
-        
+
+
         this.myself = {"name": myself.name, "age":myself.age};
-        
-        
+
+
         // this.myself = myself;
     }
-    
+
     onConfirm(myself:{name:string, age:string}) {
         // for (let key in this.confirmedMyself) {
         //     this.confirmedMyself[key] = myself[key];
-        // }   
-        
+        // }
+
         this.confirmedMyself = {"name": myself.name, "age":myself.age};
-        
+
         // this.confirmedMyself = myself;
     }
 }
