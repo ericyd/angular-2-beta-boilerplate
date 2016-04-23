@@ -1,6 +1,92 @@
+$mainColor: #1351af;
+$width: 60%;
+
+
 body {
-  padding: 32px;
-  margin: 32px;
+  padding: 0;
+  margin: 0;
   font-family: "Roboto", Arial, sans-serif;
   font-size: 16px;
+}
+
+header {
+  background: $mainColor;
+  padding: 16px 0;
+
+  .brand {
+    width: $width;
+    margin: auto;
+    color: #fff;
+    font-weight:bold;
+    font-size: 22px;
+  }
+}
+
+.main {
+  width: $width;
+  margin: 32px auto;
+  padding: 16px;
+  border: 1px solid #ddd;
+  background: #eee;
+}
+
+.input {
+  margin-bottom: 8px;
+  display:inline-block;
+}
+
+.input input, .input label {
+  font-size:inherit;
+  display:block;
+}
+
+button {
+  font-size: inherit;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+
+  &:hover {
+    background-color:#ccc;
+  }
+
+  &.danger {
+    background-color: #ff3a3d;
+    color:white;
+    border:1px solid red;
+
+    &:hover {
+      background: #b8282a;
+    }
+  }
+}
+
+section {
+  margin-bottom: 16px;
+  padding-bottom:16px;
+  border-bottom: 1px solid black;
+
+  &:last-of-type {
+    border-bottom:none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+}
+
+#item-amt {
+  width: 55px;
+  text-align: center;
+}
+
+ul {
+  margin: 0;
+
+  li {
+    cursor: pointer;
+
+    &:hover {
+      color: blue;
+      font-weight: bold;
+    }
+  }
 }
