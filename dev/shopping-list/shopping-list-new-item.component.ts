@@ -22,9 +22,9 @@ import {ListItem} from "../list-item";
 
 export class ShoppingListNewItemComponent {
     item = {name: '', amount: 0};
-    itemAdded = new EventEmitter<ListItem>()
+    itemAdded = new EventEmitter<ListItem>();
 
     onClick() {
-        this.itemAdded.emit(this.item)
+        this.itemAdded.emit(this.item);
     }
 }
