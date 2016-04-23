@@ -42,5 +42,6 @@ export class ShoppingListComponent {
 
     onRemove(item: ListItem) {
         this.listItems.splice(this.listItems.indexOf(item), 1);
+        this.selectedItem = null;
     }
 }
