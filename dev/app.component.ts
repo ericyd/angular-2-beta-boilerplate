@@ -5,7 +5,7 @@ import {Component} from 'angular2/core';
     selector: 'my-app',
 
     template: `
-
+        Forms
     `,
     directives: []
 })
