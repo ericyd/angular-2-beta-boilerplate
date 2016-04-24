@@ -18,7 +18,6 @@ import {ShoppingListService} from "./shopping-list.service";
         <button class="input" (click)="onClick()">Add item</button>
         
     `,
-    providers: [ShoppingListService]
 })
 
 export class ShoppingListNewItemComponent {

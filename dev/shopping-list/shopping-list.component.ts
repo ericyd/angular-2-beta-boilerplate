@@ -25,6 +25,11 @@ import {ShoppingListService} from "./shopping-list.service";
         </section>
     `,
     directives: [ShoppingListNewItemComponent, ShoppingListItemComponent],
+
+    /*Note: the providers metadata is the only place where the service is instantiated.
+    * Thus, each child component (shipping-list-new-item and shopping-list-item) will be able to access
+    * the SAME instance of the ShoppingListService service.  Regardless, you still need to
+    * construct the service in the constructor in each component, even if its injected in the parent*/
     providers: [ShoppingListService],
 })
 
