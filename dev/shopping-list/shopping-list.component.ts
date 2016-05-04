@@ -5,6 +5,7 @@ import {ShoppingListItemComponent} from "./shopping-list-item.component";
 import {ShoppingListService} from "./shopping-list.service";
 import {ShoppingListNewItemFormComponent} from "./shopping-list-new-item-form.component";
 import {FormBuilder} from "angular2/common";
+import {FilterPipe} from "../filter.pipe";
 
 @Component({
     selector: 'shopping-list',
@@ -15,9 +16,12 @@ import {FormBuilder} from "angular2/common";
         
         <section>
             <h3>My List</h3>
+            <div>
+                Filter: <input type="text" #filter (keyup)="0">
+            </div>
             <div class="list">
                 <ul>
-                    <li *ngFor="#listItem of listItems" (click)="onSelect(listItem)">{{listItem.name}} ({{listItem.amount}})</li>
+                    <li *ngFor="#listItem of listItems | myFilter:filter.value" (click)="onSelect(listItem)">{{listItem.name}} ({{listItem.amount}})</li>
                 </ul>
             </div>
         </section>
@@ -33,6 +37,7 @@ import {FormBuilder} from "angular2/common";
     * the SAME instance of the ShoppingListService service.  Regardless, you still need to
     * construct the service in the constructor in each component, even if its injected in the parent*/
     providers: [ShoppingListService],
+    pipes: [FilterPipe]
 })
 
 export class ShoppingListComponent implements OnInit {
