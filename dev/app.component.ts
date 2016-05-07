@@ -1,6 +1,6 @@
 import {Component} from 'angular2/core';
 import {RecipesComponent} from "./recipe-book/recipes.component";
-import {RouteConfig} from "angular2/router";
+import {RouteConfig, ROUTER_DIRECTIVES} from "angular2/router";
 import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
 
 @Component({
@@ -11,17 +11,18 @@ import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
         <header>
             <nav>
                 <ul>
-                    <li><a>Recipes</a></li>
-                    <li><a>Shopping List</a></li>
+                    <li><a [routerLink]="['Recipes']">Recipes</a></li>
+                    <li><a [routerLink]="['ShoppingList']">Shopping List</a></li>
                 </ul>
             </nav>
         </header>
         <main class="main">
-            <my-recipes></my-recipes>
+            <router-outlet></router-outlet>
         </main>
         
     `,
-    directives: [RecipesComponent]
+    directives: [ROUTER_DIRECTIVES],
+
 })
 
 @RouteConfig([
