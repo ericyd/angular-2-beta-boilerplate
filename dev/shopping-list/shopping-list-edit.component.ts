@@ -29,6 +29,7 @@ import {ShoppingListService} from "../shared/shopping-list.service";
 
 export class ShoppingListEditComponent {
     ingredient: Ingredient;
+    response: string;
 
     constructor(private _shoppingListService: ShoppingListService) {}
 
@@ -40,6 +41,11 @@ export class ShoppingListEditComponent {
             this._shoppingListService.updateItem(this._shoppingListService.getIndexOfItem(this.ingredient), item);
         } else {
             this._shoppingListService.insertItem(item);
+            this._shoppingListService.postItem(item)
+                .subscribe(
+                    (data) => this.response = JSON.stringify(data),
+                    (error) => console.log(error)
+                );
         }
 
         this.ingredient = null;
