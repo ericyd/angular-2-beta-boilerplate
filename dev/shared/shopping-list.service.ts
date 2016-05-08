@@ -8,8 +8,11 @@ import {SHOPPING_LIST} from "../mock/shopping-list";
 @Injectable()
 
 export class ShoppingListService {
+    constructor
+
     getAllItems() {
-        return SHOPPING_LIST;
+        // return SHOPPING_LIST;
+        return this._http.get('https://incandescent-torch-6930.firebaseio.com/http-test.json');
     }
 
     getItem(index: number) {
