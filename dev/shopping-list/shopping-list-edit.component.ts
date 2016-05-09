@@ -40,11 +40,11 @@ export class ShoppingListEditComponent {
         if (this.ingredient !== null) {
             this._shoppingListService.updateItem(this._shoppingListService.getIndexOfItem(this.ingredient), item);
         } else {
-            this._shoppingListService.insertItem(item);
+            // this._shoppingListService.insertItem(item);
             this._shoppingListService.postItem(item)
                 .subscribe(
-                    (data) => this.response = JSON.stringify(data),
-                    (error) => console.log(error)
+                    data => {this.response = JSON.stringify(data);this.ingredient = null},
+                    error => console.log(error)
                 );
         }
 

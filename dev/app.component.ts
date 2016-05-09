@@ -21,7 +21,7 @@ import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
         </main>
         
     `,
-    directives: [ROUTER_DIRECTIVES],
+    directives: [ROUTER_DIRECTIVES]
 
 })
 

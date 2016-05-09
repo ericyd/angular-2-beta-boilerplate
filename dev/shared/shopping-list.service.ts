@@ -13,10 +13,22 @@ import {Observable} from "rxjs/Observable";
 export class ShoppingListService {
     constructor(private _http: Http) {}
 
+    pullAllItems(): Observable<any> {
+        return this._http.get('https://incandescent-torch-6930.firebaseio.com/http-test.json')
+            .map(response => response.json());
+    }
+
+    setInitList(data:any) {
+        for (let item in data) {
+            // console.log(data[item]);
+            SHOPPING_LIST.push(new Ingredient(data[item].name, data[item].amount, data[item].units));
+        }
+    }
+    
+    // setShoppingList
+    
     getAllItems() {
         return SHOPPING_LIST;
-        // return this._http.get('https://incandescent-torch-6930.firebaseio.com/http-test.json')
-        //     .map(response => response.json());
     }
 
     /*postData(data: any): Observable<any> {

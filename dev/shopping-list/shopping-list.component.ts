@@ -5,6 +5,7 @@ import {ShoppingListService} from "../shared/shopping-list.service";
 
 @Component({
     template: `
+        {{getListError}}
         <h1>Shopping List</h1>
         
         <my-shopping-list-edit [ingredient]="selectedItem"></my-shopping-list-edit>
@@ -25,11 +26,22 @@ import {ShoppingListService} from "../shared/shopping-list.service";
 export class ShoppingListComponent implements OnInit{
     shoppingList: Ingredient[];
     selectedItem: Ingredient = null;
+    getListError:string;
 
     constructor(private _shoppingListService: ShoppingListService) {}
 
     // initialize the list by setting the shoppingList property to the result of getAllItems
     ngOnInit():any {
+        this._shoppingListService.pullAllItems()
+            .subscribe(
+                data => {
+                    this._shoppingListService.setInitList(data);
+                },
+                error => {
+                    this.getListError = error;
+                    console.log(error);
+                }
+            )
         this.shoppingList = this._shoppingListService.getAllItems();
     }
 
