@@ -4,28 +4,27 @@
 import {Injectable} from 'angular2/core';
 import {Ingredient} from "./ingredient.interface";
 import {SHOPPING_LIST} from "../mock/shopping-list";
-import {Http, Headers} from "angular2/http";
-import 'rxjs/Rx';
-import {Observable} from "rxjs/Observable";
+// import {Http, Headers} from "angular2/http";
+// import 'rxjs/Rx';
+// import {Observable} from "rxjs/Observable";
 
 @Injectable()
 
 export class ShoppingListService {
-    constructor(private _http: Http) {}
+    // constructor(private _http: Http) {}
 
-    pullAllItems(): Observable<any> {
-        return this._http.get('https://incandescent-torch-6930.firebaseio.com/http-test.json')
-            .map(response => response.json());
-    }
+    // pullAllItems(): Observable<any> {
+    //     return this._http.get('https://incandescent-torch-6930.firebaseio.com/http-test.json')
+    //         .map(response => response.json());
+    // }
+    //
+    // setInitList(data:any) {
+    //     for (let item in data) {
+    //         // console.log(data[item]);
+    //         SHOPPING_LIST.push(new Ingredient(data[item].name, data[item].amount, data[item].units));
+    //     }
+    // }
 
-    setInitList(data:any) {
-        for (let item in data) {
-            // console.log(data[item]);
-            SHOPPING_LIST.push(new Ingredient(data[item].name, data[item].amount, data[item].units));
-        }
-    }
-    
-    // setShoppingList
     
     getAllItems() {
         return SHOPPING_LIST;
@@ -53,15 +52,15 @@ export class ShoppingListService {
         return SHOPPING_LIST.push(item);
     }
 
-    postItem(item: Ingredient): Observable<any> {
-        const body = JSON.stringify(item);
-        const headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        return this._http.post('https://incandescent-torch-6930.firebaseio.com/http-test.json', body, {'headers': headers})
-            // map transforms the data stream that we get back, and parses it at JSON
-            // map is rxjs-specific for observables
-            .map(response => response.json());
-    }
+    // postItem(item: Ingredient): Observable<any> {
+    //     const body = JSON.stringify(item);
+    //     const headers = new Headers();
+    //     headers.append('Content-Type', 'application/json');
+    //     return this._http.post('https://incandescent-torch-6930.firebaseio.com/http-test.json', body, {'headers': headers})
+    //         // map transforms the data stream that we get back, and parses it at JSON
+    //         // map is rxjs-specific for observables
+    //         .map(response => response.json());
+    // }
 
     insertItems(items: Ingredient[]) {
         return Array.prototype.push.apply(SHOPPING_LIST, items);

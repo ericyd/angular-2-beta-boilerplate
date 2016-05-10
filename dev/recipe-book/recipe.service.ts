@@ -5,7 +5,7 @@
 import {Injectable} from 'angular2/core';
 import {Recipe} from "../shared/recipe.interface";
 import {RECIPES} from "../mock/recipes";
-import {Http} from "angular2/http";
+// import {Http} from "angular2/http";
 
 
 @Injectable()
@@ -13,11 +13,11 @@ import {Http} from "angular2/http";
 export class RecipeService {
     // var Firebase = require('firebase');
     // var firebaseRef = new Firebase('https://incandescent-torch-6930.firebaseio.com/');
-    constructor(private _http: Http) {}
+    // constructor(private _http: Http) {}
 
     getAllRecipes() {
-        // return RECIPES;
-        return this._http.get('https://incandescent-torch-6930.firebaseio.com/http-test.json');
+        return RECIPES;
+        // return this._http.get('https://incandescent-torch-6930.firebaseio.com/http-test.json');
     }
 
     getSingleRecipe(index: number) {

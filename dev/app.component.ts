@@ -26,8 +26,8 @@ import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
 })
 
 @RouteConfig([
-    {
-        path: '/recipes',
+    {   // recall, the ellipsis allows for subrouting in this route
+        path: '/recipes/...',
         name: 'Recipes',
         component: RecipesComponent,
         useAsDefault: true

@@ -32,16 +32,16 @@ export class ShoppingListComponent implements OnInit{
 
     // initialize the list by setting the shoppingList property to the result of getAllItems
     ngOnInit():any {
-        this._shoppingListService.pullAllItems()
-            .subscribe(
-                data => {
-                    this._shoppingListService.setInitList(data);
-                },
-                error => {
-                    this.getListError = error;
-                    console.log(error);
-                }
-            )
+        // this._shoppingListService.pullAllItems()
+        //     .subscribe(
+        //         data => {
+        //             this._shoppingListService.setInitList(data);
+        //         },
+        //         error => {
+        //             this.getListError = error;
+        //             console.log(error);
+        //         }
+        //     )
         this.shoppingList = this._shoppingListService.getAllItems();
     }
 

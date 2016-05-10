@@ -9,19 +9,19 @@ import {ShoppingListService} from "../shared/shopping-list.service";
         <form id="shopping-list-add" (ngSubmit)="onSubmit(f.value)" #f="ngForm">
             <label for="item-name">Name</label>
             <!--the ?. operator means only bind to the name property if ingredient exists, skip if null-->
-            <input type="text" id="item-name" required value="{{ingredient?.name}}" ngControl="name">
+            <input type="text" id="item-name" required [ngModel]="ingredient?.name" ngControl="name">
             
             <label for="item-amount">Amount</label>
-            <input type="text" id="item-amount" required value="{{ingredient?.amount}}" ngControl="amount">
+            <input type="text" id="item-amount" required [ngModel]="ingredient?.amount" ngControl="amount">
             
             <label for="item-units">Units</label>
-            <input type="text" id="item-units" required value="{{ingredient?.units}}" ngControl="units">
+            <input type="text" id="item-units" required [ngModel]="ingredient?.units" ngControl="units">
             
             <button class="btn" type="submit">{{ingredient === null ? 'Add' : 'Edit'}}</button>
             <button class="btn danger" *ngIf="ingredient !== null" (click)="onDelete()">Delete Item</button>
         </form>
     `,
-    inputs: ['ingredient'],
+    inputs: ['ingredient'], 
     styleUrls: ['src/css/shopping-list.css'],
     // no need for provider, because this component is a child of ShoppingListComponent, which has the provider set
     // providers: [ShoppingListService]
@@ -40,12 +40,12 @@ export class ShoppingListEditComponent {
         if (this.ingredient !== null) {
             this._shoppingListService.updateItem(this._shoppingListService.getIndexOfItem(this.ingredient), item);
         } else {
-            // this._shoppingListService.insertItem(item);
-            this._shoppingListService.postItem(item)
-                .subscribe(
-                    data => {this.response = JSON.stringify(data);this.ingredient = null},
-                    error => console.log(error)
-                );
+            this._shoppingListService.insertItem(item);
+            // this._shoppingListService.postItem(item)
+            //     .subscribe(
+            //         data => {this.response = JSON.stringify(data);this.ingredient = null},
+            //         error => console.log(error)
+            //     );
         }
 
         this.ingredient = null;
