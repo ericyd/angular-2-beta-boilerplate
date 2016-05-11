@@ -16,13 +16,12 @@ import {AuthService} from "./shared/auth.service";
                 <ul>
                     <li><a [routerLink]="['Recipes']">Recipes</a></li>
                     <li><a [routerLink]="['ShoppingList']">Shopping List</a></li>
-                    <li><a [routerLink]="['Signup']">Sign up</a></li>
-                    <li><a [routerLink]="['Login']">Login</a></li>
+                    <li *ngIf="!isAuth()"><a [routerLink]="['Signup']">Sign up</a></li>
+                    <li *ngIf="!isAuth()"><a [routerLink]="['Login']">Login</a></li>
+                    <li *ngIf="isAuth()"><a (click)="logout()">Logout</a></li>
                 </ul>
             </nav>
-            <nav *ngIf="isAuth()">
-                <a (click)="logout()">Logout</a>
-            </nav>
+            
         </header>
         <main class="main">
             <router-outlet></router-outlet>

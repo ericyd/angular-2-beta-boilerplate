@@ -32,32 +32,34 @@ export class AuthService {
                 if (error) {
                     console.error(error);
                     this._signupError = true;
-                    return;
                 }
                 this._signupError = false;
                 this._router.navigate(['Login']);
                 // this.signinUser({userData.email, userData.password});
-                return console.log('Successfully signed up user: ' + userData.uid);
+                console.log('Successfully signed up user: ' + userData.uid);
             });
     }
 
-    signinUser(user: User): Observable<any> {
+    loginUser(user: User): Promise<any> {
         const firebaseRef = new Firebase('https://incandescent-torch-6930.firebaseio.com/');
 
         return firebaseRef.authWithPassword({
-                'email': user.email,
-                'password': user.password
-            },
-            (error, authData) => {
-                if (error) {
-                    this._signinError = true;
-                    return console.error('Signin error: ' + error);
-                }
+            'email': user.email,
+            'password': user.password
+        });
+
+        /* optional callback
+        (error, authData) => {
+            if (error) {
+                this._signinError = true;
+                console.error('Signin error: ' + error);
+            } else {
                 localStorage.setItem('token', authData.auth);
                 this._router.navigate(['Recipes']);
-                return console.log('Successfully logged in user');
+                console.log('Successfully logged in user');
             }
-        );
+
+        }*/
     }
 
     logout() {

@@ -4,36 +4,15 @@ import {AuthService} from "../shared/auth.service";
 import {ControlGroup, FormBuilder, Validators, Control} from "angular2/common";
 
 @Component({
-    template: `
-        <form [ngFormModel]="myForm" (ngSubmit)="onSubmit()">
-            
-            <label for="email">Email</label>
-            <input type="email" id="email" [ngFormControl]="myForm.find('email')" #email="ngForm">
-            
-            <br>
-            
-            <label for="password">Password</label>
-            <input type="password" id="password" [ngFormControl]="myForm.find('password')" #password="ngForm">
-            
-            <br>
-            
-            <label for="confirmPassword">Confirm Password</label>
-            <input type="password" id="confirmPassword" [ngFormControl]="myForm.find('confirmPassword')" #confirmPassword="ngForm">
-            
-            <br>
-            
-            <button type="submit">Submit</button>
-        </form>
-        
-        <section *ngIf="error">
-            Error signing up
-        </section>
-    `
+    templateUrl: 'templates/auth/authenticate-user.tpl.html',
 })
 
 export class SignupComponent implements OnInit {
     myForm: ControlGroup;
+    title: string = 'Sign Up';
     error: boolean = false;
+    errorMsg: string = '';
+
 
 
     constructor(private _authService: AuthService, private _fb: FormBuilder) {}
@@ -42,7 +21,7 @@ export class SignupComponent implements OnInit {
         this._authService.signupUser(this.myForm.value);
     }
     
-    onSignupError(): boolean {
+    onSignupError() {
         this.error = this._authService.getSignupError();
     }
 

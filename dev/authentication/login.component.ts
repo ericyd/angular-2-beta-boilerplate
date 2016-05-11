@@ -1,36 +1,37 @@
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
+import {Validators, FormBuilder, ControlGroup} from "angular2/common";
+import {AuthService} from "../shared/auth.service";
+import {Router} from "angular2/router";
 
 @Component({
-    template: `
-        <h3>Login</h3>
-        <form [ngFormModel]="myForm" (ngSubmit)="onSubmit()">
-            
-            <label for="email">Email</label>
-            <input type="email" id="email" [ngFormControl]="myForm.find('email')" #email="ngForm">
-            
-            <br>
-            
-            <label for="password">Password</label>
-            <input type="password" id="password" [ngFormControl]="myForm.find('password')" #password="ngForm">
-            
-            <br>
-            
-            <label for="confirmPassword">Confirm Password</label>
-            <input type="password" id="confirmPassword" [ngFormControl]="myForm.find('confirmPassword')" #confirmPassword="ngForm">
-            
-            <br>
-            
-            <button type="submit">Submit</button>
-        </form>
-        
-        <section *ngIf="signupError">
-            Error signing up
-        </section>
-    `
+    templateUrl: 'templates/auth/authenticate-user.tpl.html',
 })
 
-export class LoginComponent {
+export class LoginComponent implements OnInit {
     title: string = "Login";
     error: boolean = false;
-    
+    errorMsg: string = '';
+    myForm: ControlGroup;
+
+    constructor(private _fb: FormBuilder, private _authService: AuthService, private _router: Router) {}
+
+    onSubmit() {
+        this._authService.loginUser(this.myForm.value).then(
+            (authData) => {
+                localStorage.setItem('token', authData.auth);
+                this._router.navigate(['Recipes']);
+            },
+            (error) => {
+                this.error = true;
+                this.errorMsg = error;
+            });
+    }
+
+    ngOnInit(): any {
+        this.myForm = this._fb.group({
+            'email': ['', Validators.required],
+            'password': ['', Validators.required]
+        })
+    }
+
 }
