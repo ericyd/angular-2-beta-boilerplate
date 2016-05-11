@@ -59,8 +59,10 @@ export class AuthService {
         localStorage.removeItem('token');
         // emit this event so the header can listen to it
         // the app.component listens for this event and routes to the signin page whenever logout is fired
+
         this._userLoggedOut.emit('Logged Out');
     }
+
 
     // this basically returns an Observable, which is subscribed by app.component
     getLoggedOutEvent(): EventEmitter<any> {
