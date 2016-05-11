@@ -45,7 +45,12 @@ export class RecipeEditComponent implements OnInit{
         if (this._editMode == 'edit') {
             this._recipeService.updateRecipe(+this._recipeIndex, this.recipe);
         } else {
-            this._recipeService.insertRecipe(this.recipe);
+            // this._recipeService.insertRecipe(this.recipe);
+            this._recipeService.putRecipe(this.recipe)
+                .subscribe(
+                    data => console.log(data),
+                    error => console.error(error)
+                );
         }
         this._submitted = true;
         this.navigateBack();

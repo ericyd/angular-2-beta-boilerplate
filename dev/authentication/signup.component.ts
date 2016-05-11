@@ -1,5 +1,4 @@
 import {Component, OnInit} from 'angular2/core';
-import {User} from "../shared/user.interface";
 import {AuthService} from "../shared/auth.service";
 import {ControlGroup, FormBuilder, Validators, Control} from "angular2/common";
 
@@ -20,10 +19,6 @@ export class SignupComponent implements OnInit {
     onSubmit() {
         this._authService.signupUser(this.myForm.value);
     }
-    
-    onSignupError() {
-        this.error = this._authService.getSignupError();
-    }
 
     ngOnInit(): any {
         this.myForm = this._fb.group({
@@ -40,7 +35,15 @@ export class SignupComponent implements OnInit {
                 Validators.required,
                 this.isSamePassword.bind(this)
             ])]
-        })
+        });
+
+        this._authService.getAuthError()
+            .subscribe(
+                (error) => {
+                    this.error = true;
+                    this.errorMsg = error;
+                }
+            );
     }
 
 
@@ -55,12 +58,14 @@ export class SignupComponent implements OnInit {
         }
     }
 
+    //noinspection JSMethodCanBeStatic
     largerThanFive(control: Control): {[s: string]: boolean} {
         if (control.value.length < 6) {
             return {'passwordTooShort': true};
         }
     }
 
+    //noinspection JSMethodCanBeStatic
     lettersAndNumbers(control: Control): {[s: string]: boolean} {
 
         if (!(control.value).match('[a-zA-Z]+[0-9]+')) {

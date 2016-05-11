@@ -5,23 +5,40 @@
 import {Injectable} from 'angular2/core';
 import {Recipe} from "../shared/recipe.interface";
 import {RECIPES} from "../mock/recipes";
-// import {Http} from "angular2/http";
+import {Http, Headers} from "angular2/http";
+import {Observable} from "rxjs/Observable";
 
 
 @Injectable()
 
 export class RecipeService {
-    // var Firebase = require('firebase');
-    // var firebaseRef = new Firebase('https://incandescent-torch-6930.firebaseio.com/');
-    // constructor(private _http: Http) {}
+    
+    constructor(private _http: Http) {}
 
-    getAllRecipes() {
-        return RECIPES;
-        // return this._http.get('https://incandescent-torch-6930.firebaseio.com/http-test.json');
+    getAllRecipes(): Observable<any> {
+        // return RECIPES;
+        return this._http.get('https://incandescent-torch-6930.firebaseio.com/recipes.json')
+            .map(response => response.json());
     }
 
     getSingleRecipe(index: number) {
         return RECIPES[index];
+    }
+
+    putRecipe(item: Recipe): Observable<any> {
+        // build request
+        const body = JSON.stringify(item);
+        const headers: Headers = new Headers();
+        headers.append('Content-type', 'application/json');
+
+        // get data from current session
+        const uid = localStorage.getItem('uid');
+        const token = localStorage.getItem('token') !== null ? '?auth=' + localStorage.getItem('token') : '';
+
+        // send request
+        return this._http.post(`https://incandescent-torch-6930.firebaseio.com/recipes/${uid}.json${token}`,
+            body, {headers: headers})
+            .map(response => response.json());
     }
 
     getIndexOfRecipe(item: Recipe) {

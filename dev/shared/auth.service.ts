@@ -4,7 +4,6 @@
 
 import {Injectable, EventEmitter} from "angular2/core";
 import {User} from "./user.interface";
-import {Headers} from "angular2/http";
 import 'rxjs/Rx';
 import {Observable} from "rxjs/Observable";
 import {Router} from "angular2/router";
@@ -15,8 +14,7 @@ declare var Firebase:any;
 
 export class AuthService {
 
-    private _signupError: boolean = false;
-    private _signinError: boolean = false;
+    private _authError: EventEmitter<string> = new EventEmitter<string>();
     private _loggedIn: EventEmitter<any> = new EventEmitter<any>();
 
     constructor(private _router: Router) {}
@@ -30,13 +28,12 @@ export class AuthService {
             },
             (error, userData) => {
                 if (error) {
-                    console.error(error);
-                    this._signupError = true;
+                    this._authError.emit(error);
+                } else {
+                    // auto-login user after account creation
+                    this.loginUser({email: user.email, password: user.password});
                 }
-                this._signupError = false;
-                this._router.navigate(['Login']);
-                // this.signinUser({userData.email, userData.password});
-                console.log('Successfully signed up user: ' + userData.uid);
+
             });
     }
 
@@ -44,9 +41,20 @@ export class AuthService {
         const firebaseRef = new Firebase('https://incandescent-torch-6930.firebaseio.com/');
 
         return firebaseRef.authWithPassword({
-            'email': user.email,
-            'password': user.password
-        });
+                'email': user.email,
+                'password': user.password
+            },
+            (error, authData) => {
+                if (error) {
+                    this._authError.emit(error);
+                } else {
+                    localStorage.setItem('token', authData.token);
+                    localStorage.setItem('uid', authData.uid);
+                    this._router.navigate(['Recipes']);
+                    console.log('Successfully logged in user');
+                }
+
+            });
 
         /* optional callback
         (error, authData) => {
@@ -71,12 +79,8 @@ export class AuthService {
         return localStorage.getItem('token');
     }
 
-    getSignupError(): boolean {
-        return this._signupError;
-    }
-
-    getSigninError(): boolean {
-        return this._signinError;
+    getAuthError(): EventEmitter<string> {
+        return this._authError;
     }
 
     getLogoutEvent(): EventEmitter<any> {

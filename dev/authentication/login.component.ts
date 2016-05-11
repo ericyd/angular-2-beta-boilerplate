@@ -13,25 +13,34 @@ export class LoginComponent implements OnInit {
     errorMsg: string = '';
     myForm: ControlGroup;
 
-    constructor(private _fb: FormBuilder, private _authService: AuthService, private _router: Router) {}
+    constructor(private _fb: FormBuilder, private _authService: AuthService) {}
 
     onSubmit() {
-        this._authService.loginUser(this.myForm.value).then(
-            (authData) => {
-                localStorage.setItem('token', authData.auth);
-                this._router.navigate(['Recipes']);
-            },
-            (error) => {
-                this.error = true;
-                this.errorMsg = error;
-            });
+        this._authService.loginUser(this.myForm.value);
+            // .then(
+            // (authData) => {
+            //     localStorage.setItem('token', authData.auth);
+            //     this._router.navigate(['Recipes']);
+            // },
+            // (error) => {
+            //     this.error = true;
+            //     this.errorMsg = error;
+            // });
     }
 
     ngOnInit(): any {
         this.myForm = this._fb.group({
             'email': ['', Validators.required],
             'password': ['', Validators.required]
-        })
+        });
+
+        this._authService.getAuthError()
+            .subscribe(
+                (error) => {
+                    this.error = true;
+                    this.errorMsg = error;
+                }
+            );
     }
 
 }

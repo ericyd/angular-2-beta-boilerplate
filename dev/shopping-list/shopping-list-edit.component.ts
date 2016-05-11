@@ -29,8 +29,7 @@ import {ShoppingListService} from "../shared/shopping-list.service";
 
 export class ShoppingListEditComponent {
     ingredient: Ingredient;
-    response: string;
-
+    
     constructor(private _shoppingListService: ShoppingListService) {}
 
     // this takes an Ingredient because the form has the same format as an Ingredient class
