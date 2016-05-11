@@ -27,12 +27,8 @@ export class ProtectedComponent implements OnInit {
     onSaveData() {
         this._dataService.addData(this.myForm.value)
             .subscribe(
-                data => {
-                    console.log(data);
-                }
-                error => {
-                    console.error(error);
-                }
+                data => console.log(data),
+                error => console.error(error)
             );
     }
 
