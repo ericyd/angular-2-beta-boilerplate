@@ -1,7 +1,10 @@
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 import {RecipesComponent} from "./recipe-book/recipes.component";
-import {RouteConfig, ROUTER_DIRECTIVES} from "angular2/router";
+import {RouteConfig, ROUTER_DIRECTIVES, Router} from "angular2/router";
 import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
+import {SignupComponent} from "./authentication/signup.component";
+import {LoginComponent} from "./authentication/login.component";
+import {AuthService} from "./shared/auth.service";
 
 @Component({
     
@@ -16,6 +19,9 @@ import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
                     <li><a [routerLink]="['Signup']">Sign up</a></li>
                     <li><a [routerLink]="['Login']">Login</a></li>
                 </ul>
+            </nav>
+            <nav *ngIf="isAuth()">
+                <a (click)="logout()">Logout</a>
             </nav>
         </header>
         <main class="main">
@@ -39,8 +45,30 @@ import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
         name: 'ShoppingList',
         component: ShoppingListComponent
     },
+    {
+        path: '/signup',
+        name: 'Signup',
+        component: SignupComponent
+    },
+    {
+        path: '/login',
+        name: 'Login',
+        component: LoginComponent
+    }
 ])
 
-export class AppComponent {
+export class AppComponent implements OnInit {
+    constructor(private _authService: AuthService, private _router: Router) {}
+
+    isAuth(): boolean {
+        return this._authService.isAuthenticated();
+    }
+
+    logout() {
+        return this._authService.logout();
+    }
     
+    ngOnInit(): any {
+        this._authService.getLogoutEvent().subscribe(() => this._router.navigate(['Recipes']));
+    }
 }
