@@ -13,6 +13,8 @@ import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
                 <ul>
                     <li><a [routerLink]="['Recipes']">Recipes</a></li>
                     <li><a [routerLink]="['ShoppingList']">Shopping List</a></li>
+                    <li><a [routerLink]="['Signup']">Sign up</a></li>
+                    <li><a [routerLink]="['Login']">Login</a></li>
                 </ul>
             </nav>
         </header>
