@@ -13,7 +13,8 @@ export let RECIPES: Recipe[] = [
             new Ingredient('Pork Meat', 1, 'lb'),
             new Ingredient('French Fries', 1, 'bag'),
             new Ingredient('Salad', 2, 'head'),
-        ]
+        ],
+        '1'
     ),
     new Recipe('Super Mega Burger', 'Tastes so delicious!', 'http://www.fraeuleinburger.de/tl_files/images/content/burger/Fraeulein-Burger.jpg',
         [
@@ -21,6 +22,7 @@ export let RECIPES: Recipe[] = [
             new Ingredient('Salad', 1, 'head'),
             new Ingredient('Hamburger', 4, 'lbs'),
             new Ingredient('Vegetables', 2, 'bunches')
-        ]
+        ],
+        '2'
     )
 ];

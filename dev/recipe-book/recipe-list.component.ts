@@ -27,7 +27,7 @@ export class RecipeListComponent implements OnInit{
     onSelect(item: Recipe) {
         // todo: fix getIndexOfRecipe so that it queries the right object.
         // console.log(item.name);
-        this._router.navigate(['RecipeDetail', {'recipeName': item.name}]);
+        this._router.navigate(['RecipeDetail', {'recipeId': item.id}]);
     }
 
     onAddRecipe() {
@@ -37,23 +37,28 @@ export class RecipeListComponent implements OnInit{
     ngOnInit():any {
         // todo: don't download all data, just download recipe names and imageUrls (and maybe IDs?)  Then, when querying a specific recipe, I can just call the one I need rather than downloading the whole dataset to begin with
         let recipes = [];
-        this._recipeService.getAllRecipes()
+
+        // initialize the firebase listener
+        this._recipeService.getAllRecipes();
+
+        // listen for changes and update recipes on changes
+        this._recipeService.listen()
             .subscribe(
                 data => {
-                    Object.keys(data).forEach(userId => {
-                        recipes.push(new Recipe(
-                            data[userId].name,
-                            data[userId].content,
-                            data[userId].imageUrl,
-                            data[userId].ingredients
+                    this.recipes = [];
+                    console.log('got update');
+                    Object.keys(data).forEach(recipeId => {
+                        this.recipes.push(new Recipe(
+                            data[recipeId].name,
+                            data[recipeId].content,
+                            data[recipeId].imageUrl,
+                            data[recipeId].ingredients,
+                            recipeId
                         ));
                     });
                 },
                 error => console.error(error)
             );
-
-
-        
 
         this.recipes = recipes;
     }

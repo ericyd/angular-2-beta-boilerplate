@@ -8,11 +8,13 @@ export class Recipe {
     content: string;
     imageUrl: string;
     ingredients: Ingredient[];
+    id: string;
 
-    constructor(name: string, content: string, imageUrl: string, ingredients: Ingredient[]) {
+    constructor(name: string, content: string, imageUrl: string, ingredients: Ingredient[], id: string) {
         this.name = name;
         this.content = content;
         this.imageUrl = imageUrl;
         this.ingredients = ingredients;
+        this.id = id;
     }
 }

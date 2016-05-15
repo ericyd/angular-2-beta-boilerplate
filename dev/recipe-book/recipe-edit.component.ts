@@ -10,11 +10,9 @@ import {RecipeService} from "./recipe.service";
 
 export class RecipeEditComponent implements OnInit{
     myForm: ControlGroup;
-    // recipe: Recipe;
-    recipe;
+    recipe: Recipe;
     private _editMode: string = 'create';
-    private _recipeIndex: string;
-    private _recipeName: string;
+    private _recipeId: string;
     private _submitted: boolean = false;
 
 
@@ -45,17 +43,26 @@ export class RecipeEditComponent implements OnInit{
     onSubmit() {
         this.recipe = this.myForm.value;
         if (this._editMode == 'edit') {
-            this._recipeService.updateRecipe(+this._recipeIndex, this.recipe);
+            this._recipeService.updateRecipe(this._recipeId, this.recipe)
+                .subscribe(
+                    data => {
+                        console.log(data);
+                        console.log('successfully updated');
+                        this.navigateBack();
+                    },
+                    error => console.error(error)
+                );
         } else {
             // this._recipeService.insertRecipe(this.recipe);
             this._recipeService.putRecipe(this.recipe)
                 .subscribe(
                     data => console.log(data),
-                    error => console.error(error)
+                    error => console.error(error),
+                    // third arg is onComplete
+                    () => this.navigateBack()
                 );
         }
         this._submitted = true;
-        this.navigateBack();
     }
 
     onCancel() {
@@ -63,7 +70,7 @@ export class RecipeEditComponent implements OnInit{
     }
 
     navigateBack() {
-        this._router.navigate(['RecipeDetail', {'recipeName': this._recipeName}]);
+        this._router.navigate(['RecipeDetail', {'recipeId': this._recipeId}]);
     }
 
     routerCanDeactivate(nextInstruction: ComponentInstruction, previousInstruction: ComponentInstruction) {
@@ -89,8 +96,8 @@ export class RecipeEditComponent implements OnInit{
         // if editing, populate controls with values
         if (this._editMode == 'edit') {
             // get values and set current recipe
-            this._recipeName = this._routeParams.get('recipeName');
-            this.recipe = this._recipeService.getSingleRecipe(this._recipeName);
+            this._recipeId = this._routeParams.get('recipeId');
+            this.recipe = this._recipeService.getCurrentRecipe();
 
             // populate controlarray
             for (let i = 0; i < this.recipe.ingredients.length; i++) {
@@ -126,6 +133,9 @@ export class RecipeEditComponent implements OnInit{
         });
     }
 }
+
+
+// Validators
 
 function hasNumbers(control: Control): {[s: string]: boolean} {
     if (!('' + control.value).match('\\d+')) {

@@ -14,25 +14,33 @@ declare var Firebase:any;
 @Injectable()
 
 export class RecipeService {
-    private _returnedData: EventEmitter<Recipe> = new EventEmitter<Recipe>();
     private recipe: Recipe;
     private firebaseRef = new Firebase('https://incandescent-torch-6930.firebaseio.com/recipes');
+    private _dataListener: EventEmitter<any> = new EventEmitter<any>();
 
     constructor(private _http: Http) {}
 
-    getAllRecipes(): Observable<any> {
+    getAllRecipes() {
         // return RECIPES;
 
-        // this.firebaseRef.on("value", function(snapshot) {
-        //     console.log(snapshot.val());
-        //     return snapshot.val();
-        // }, function (errorObject) {
-        //     console.log("The read failed: " + errorObject);
-        // });
+        this.firebaseRef.on("value", function(snapshot) {
+            console.log('sending value');
+            console.log(snapshot.val());
+            this._dataListener.emit(snapshot.val());
+        }, function (errorObject) {
+            console.log("The read failed: " + errorObject);
+        }, this);
 
-        return this._http.get('https://incandescent-torch-6930.firebaseio.com/recipes.json')
-            .map(response => response.json());
+        // return this._http.get('https://incandescent-torch-6930.firebaseio.com/recipes.json')
+        //     .map(response => response.json());
+
     }
+
+
+    listen(): EventEmitter<any> {
+        return this._dataListener;
+    }
+
 
     getMostRecentRecipes(): Observable<any> {
         const query = '?orderBy="added"'
@@ -40,27 +48,34 @@ export class RecipeService {
             .map(response => response.json());
     }
 
-    getSingleRecipe(name: string) {
-        console.log("getSingleRecipe()");
-        this.firebaseRef.orderByChild("name").equalTo(name).once("value", function(snapshot) {
-            let data = Object.keys(snapshot.val())[0];
-            if (data) {
-                 let newRecipe = new Recipe(
-                    snapshot.val()[data].name,
-                    snapshot.val()[data].content,
-                    snapshot.val()[data].imageUrl,
-                    snapshot.val()[data].ingredients
-                );
-                this._returnedData.emit(newRecipe)
+    getSingleRecipe(id: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            if (id !== null) {
+                const firebaseRef = new Firebase(`https://incandescent-torch-6930.firebaseio.com/recipes/${id}`);
+                console.log("getSingleRecipe()");
+
+                firebaseRef.once("value", function(snapshot) {
+
+                    // let data = Object.keys(snapshot.val())[0];
+                    this.recipe = new Recipe(
+                        snapshot.val().name,
+                        snapshot.val().content,
+                        snapshot.val().imageUrl,
+                        snapshot.val().ingredients,
+                        snapshot.key()
+                    );
+                    console.log(this.recipe);
+                    resolve(this.recipe);
+
+                }, function (errorObject) {
+                    console.log("The read failed: " + errorObject.code);
+                    reject(errorObject.code);
+                }, this);
+
+            } else {
+                reject('id === null');
             }
-
-        }, function (errorObject) {
-            console.log("The read failed: " + errorObject);
-        }, this);
-
-
-        // return this._http.get(`https://incandescent-torch-6930.firebaseio.com/recipes.json${query}`)
-        //     .map(response => response.json());
+        });
     }
 
     putRecipe(item: Recipe): Observable<any> {
@@ -71,8 +86,8 @@ export class RecipeService {
 
         // build request
         item['author'] = uid;
-        item['added'] = (new Date()).getDate();
-        item['last_updated'] = (new Date()).getDate();
+        item['added'] = (new Date()).getUTCMilliseconds();
+        item['last_updated'] = (new Date()).getUTCMilliseconds();
 
         const body = JSON.stringify(item);
         const headers: Headers = new Headers();
@@ -85,28 +100,29 @@ export class RecipeService {
             .map(response => response.json());
     }
 
-    getIndexOfRecipe(item: Recipe) {
-        return RECIPES.indexOf(item);
-    }
-
-    insertRecipe(item: Recipe) {
-        return RECIPES.push(item);
-    }
-
-    deleteRecipe(index: number) {
+    deleteRecipe(id: string): Observable<any> {
         // return RECIPES.splice(RECIPES.indexOf(item), 1);
-        return RECIPES.splice(index, 1);
+        // return RECIPES.splice(index, 1);
+        const token = localStorage.getItem('token') !== null ? '?auth=' + localStorage.getItem('token') : '';
+        return this._http.delete(`https://incandescent-torch-6930.firebaseio.com/recipes/${id}.json${token}`);
     }
 
-    updateRecipe(index: number, item: Recipe) {
-        return RECIPES[index] = item;
+    updateRecipe(id: string, item: Recipe): Observable<any> {
+        const token = localStorage.getItem('token') !== null ? '?auth=' + localStorage.getItem('token') : '';
+        const body = JSON.stringify(item);
+        const headers: Headers = new Headers();
+        headers.append('Content-type', 'application/json');
+
+        return this._http.patch(`https://incandescent-torch-6930.firebaseio.com/recipes/${id}/.json${token}`, body, {headers: headers})
+            .map(response => response.json());
     }
 
-    getReturnedData(): EventEmitter<Recipe> {
-        return this._returnedData;
-    }
-
-    getCurrentRecipe(): Recipe {
+    getCurrentRecipe() {
         return this.recipe;
     }
+
+    clearCurrentRecipe() {
+        this.recipe = null;
+    }
+
 }
