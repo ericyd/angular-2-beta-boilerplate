@@ -40,9 +40,8 @@ export class RecipeDetailComponent implements OnInit {
 
     ngOnInit():any {
 
-        let itemId = this._routeParams.get('recipeId');
-
-        this._recipeId = itemId;
+        this._recipeId = this._routeParams.get('recipeId');
+        
         this._recipeService.getSingleRecipe(this._recipeId).then(
             (resolve) => {
                 this.recipe = resolve;

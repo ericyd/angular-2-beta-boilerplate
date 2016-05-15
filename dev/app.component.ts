@@ -5,7 +5,6 @@ import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
 import {SignupComponent} from "./authentication/signup.component";
 import {LoginComponent} from "./authentication/login.component";
 import {AuthService} from "./shared/auth.service";
-import {RecipeService} from "./recipe-book/recipe.service";
 
 @Component({
     

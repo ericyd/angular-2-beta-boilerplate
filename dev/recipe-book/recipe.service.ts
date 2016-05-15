@@ -4,7 +4,6 @@
 
 import {Injectable, EventEmitter} from 'angular2/core';
 import {Recipe} from "../shared/recipe.interface";
-import {RECIPES} from "../mock/recipes";
 import {Http, Headers} from "angular2/http";
 import {Observable} from "rxjs/Observable";
 
@@ -45,7 +44,7 @@ export class RecipeService {
 
 
     getMostRecentRecipes(): Observable<any> {
-        const query = '?orderBy="added"'
+        const query = '?orderBy="added"';
         return this._http.get(`https://incandescent-torch-6930.firebaseio.com/recipes.json${query}`)
             .map(response => response.json());
     }

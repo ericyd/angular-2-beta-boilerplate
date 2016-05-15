@@ -1,7 +1,6 @@
 import {Component, OnInit} from 'angular2/core';
 import {Validators, FormBuilder, ControlGroup} from "angular2/common";
 import {AuthService} from "../shared/auth.service";
-import {Router} from "angular2/router";
 
 @Component({
     templateUrl: 'templates/auth/authenticate-user.tpl.html',
@@ -17,15 +16,6 @@ export class LoginComponent implements OnInit {
 
     onSubmit() {
         this._authService.loginUser(this.myForm.value);
-            // .then(
-            // (authData) => {
-            //     localStorage.setItem('token', authData.auth);
-            //     this._router.navigate(['Recipes']);
-            // },
-            // (error) => {
-            //     this.error = true;
-            //     this.errorMsg = error;
-            // });
     }
 
     ngOnInit(): any {

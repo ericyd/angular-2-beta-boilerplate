@@ -33,7 +33,6 @@ export class RecipeListComponent implements OnInit{
 
     ngOnInit():any {
         // todo: don't download all data, just download recipe names and imageUrls (and maybe IDs?)  Then, when querying a specific recipe, I can just call the one I need rather than downloading the whole dataset to begin with
-        let recipes = [];
         console.log('init recipe list');
         // initialize the firebase listener
         this.recipes = this._recipeService.getAllRecipes();

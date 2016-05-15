@@ -26,7 +26,7 @@ export class AuthService {
                 'email': user.email,
                 'password': user.password
             },
-            (error, userData) => {
+            (error) => {
                 if (error) {
                     this._authError.emit(error);
                 } else {
