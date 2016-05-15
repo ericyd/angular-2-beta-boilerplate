@@ -15,6 +15,7 @@ declare var Firebase:any;
 
 export class RecipeService {
     private recipe: Recipe;
+    private _recipeList: Recipe[];
     private firebaseRef = new Firebase('https://incandescent-torch-6930.firebaseio.com/recipes');
     private _dataListener: EventEmitter<any> = new EventEmitter<any>();
 
@@ -24,12 +25,13 @@ export class RecipeService {
         // return RECIPES;
 
         this.firebaseRef.on("value", function(snapshot) {
-            console.log('sending value');
-            console.log(snapshot.val());
             this._dataListener.emit(snapshot.val());
+            this._recipeList = snapshot.val();
         }, function (errorObject) {
             console.log("The read failed: " + errorObject);
         }, this);
+
+        return this._recipeList;
 
         // return this._http.get('https://incandescent-torch-6930.firebaseio.com/recipes.json')
         //     .map(response => response.json());
@@ -52,11 +54,8 @@ export class RecipeService {
         return new Promise((resolve, reject) => {
             if (id !== null) {
                 const firebaseRef = new Firebase(`https://incandescent-torch-6930.firebaseio.com/recipes/${id}`);
-                console.log("getSingleRecipe()");
 
                 firebaseRef.once("value", function(snapshot) {
-
-                    // let data = Object.keys(snapshot.val())[0];
                     this.recipe = new Recipe(
                         snapshot.val().name,
                         snapshot.val().content,
@@ -64,7 +63,6 @@ export class RecipeService {
                         snapshot.val().ingredients,
                         snapshot.key()
                     );
-                    console.log(this.recipe);
                     resolve(this.recipe);
 
                 }, function (errorObject) {
@@ -101,8 +99,6 @@ export class RecipeService {
     }
 
     deleteRecipe(id: string): Observable<any> {
-        // return RECIPES.splice(RECIPES.indexOf(item), 1);
-        // return RECIPES.splice(index, 1);
         const token = localStorage.getItem('token') !== null ? '?auth=' + localStorage.getItem('token') : '';
         return this._http.delete(`https://incandescent-torch-6930.firebaseio.com/recipes/${id}.json${token}`);
     }

@@ -154,15 +154,17 @@ header {
 
   h1 {
     margin: 0 0 30px 0;
-    display: inline-block;
   }
 
   .img {
 
+    font-size: 0.5em;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 2px #ccc;
+
     img {
       max-width: 100%;
-      border: 1px solid #ccc;
-      box-shadow: 2px 2px 2px #ccc;
+
     }
   }
 

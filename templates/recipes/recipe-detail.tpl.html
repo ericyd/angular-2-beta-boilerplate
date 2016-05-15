@@ -4,9 +4,10 @@
 
 <div class="recipe" *ngIf="recipe != null">
     <h1>{{recipe.name}}</h1>
-    <span><a (click)="onEdit()">Edit</a> | <a class="danger" (click)="onDelete()">Delete</a></span>
+    <span><a class="btn" (click)="onEdit()">Edit</a> | <a class="btn danger" (click)="onDelete()">Delete</a></span>
 
-    <div class="img">
+    <div class="img" *ngIf="recipe.imageUrl != ''">
+        {{recipe.imageUrl}}
         <img [src]="recipe.imageUrl">
     </div>
 

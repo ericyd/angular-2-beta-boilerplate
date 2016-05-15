@@ -45,7 +45,7 @@
                     <input type="text" class="item-name" #itemName>
                     <input type="text" class="item-amount" #itemAmount>
                     <input type="text" class="item-amount" #itemUnits>
-                    <a (click)="onAddItem(itemName.value, itemAmount.value, itemUnits.value)">+</a>
+                    <button type="submit" (click)="onAddItem(itemName.value, itemAmount.value, itemUnits.value)">+</button>
                 </li>
             </ul>
         </form>
