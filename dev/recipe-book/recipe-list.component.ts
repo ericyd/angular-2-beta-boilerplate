@@ -19,13 +19,15 @@ import {Router} from "angular2/router";
 })
 
 export class RecipeListComponent implements OnInit{
+    count = 0;
     recipes: Recipe[];
 
     constructor(private _recipeService: RecipeService, private _router: Router) {}
 
     onSelect(item: Recipe) {
         // todo: fix getIndexOfRecipe so that it queries the right object.
-        this._router.navigate(['RecipeDetail', {'recipeIndex': this._recipeService.getIndexOfRecipe(item)}]);
+        // console.log(item.name);
+        this._router.navigate(['RecipeDetail', {'recipeName': item.name}]);
     }
 
     onAddRecipe() {
@@ -39,14 +41,20 @@ export class RecipeListComponent implements OnInit{
             .subscribe(
                 data => {
                     Object.keys(data).forEach(userId => {
-                        Object.keys(data[userId]).forEach(recipe => {
-                            console.log(data[userId][recipe]);
-                            recipes.push(data[userId][recipe]);
-                        });
+                        recipes.push(new Recipe(
+                            data[userId].name,
+                            data[userId].content,
+                            data[userId].imageUrl,
+                            data[userId].ingredients
+                        ));
                     });
                 },
                 error => console.error(error)
             );
+
+
+        
+
         this.recipes = recipes;
     }
 }

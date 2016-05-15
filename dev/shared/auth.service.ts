@@ -16,13 +16,13 @@ export class AuthService {
 
     private _authError: EventEmitter<string> = new EventEmitter<string>();
     private _loggedIn: EventEmitter<any> = new EventEmitter<any>();
+    private firebaseRef = new Firebase('https://incandescent-torch-6930.firebaseio.com/');
 
     constructor(private _router: Router) {}
 
     signupUser(user: User): Observable<any> {
-        const firebaseRef = new Firebase('https://incandescent-torch-6930.firebaseio.com/');
 
-        return firebaseRef.createUser({
+        return this.firebaseRef.createUser({
                 'email': user.email,
                 'password': user.password
             },
@@ -38,9 +38,8 @@ export class AuthService {
     }
 
     loginUser(user: User): Promise<any> {
-        const firebaseRef = new Firebase('https://incandescent-torch-6930.firebaseio.com/');
 
-        return firebaseRef.authWithPassword({
+        return this.firebaseRef.authWithPassword({
                 'email': user.email,
                 'password': user.password
             },
@@ -72,7 +71,8 @@ export class AuthService {
 
     logout() {
         this._loggedIn.emit('Logged Out');
-        return localStorage.removeItem('token');
+        localStorage.removeItem('uid');
+        localStorage.removeItem('token');
     }
 
     isAuthenticated(): boolean {

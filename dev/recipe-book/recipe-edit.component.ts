@@ -10,9 +10,11 @@ import {RecipeService} from "./recipe.service";
 
 export class RecipeEditComponent implements OnInit{
     myForm: ControlGroup;
-    recipe: Recipe;
+    // recipe: Recipe;
+    recipe;
     private _editMode: string = 'create';
     private _recipeIndex: string;
+    private _recipeName: string;
     private _submitted: boolean = false;
 
 
@@ -61,7 +63,7 @@ export class RecipeEditComponent implements OnInit{
     }
 
     navigateBack() {
-        this._router.navigate(['RecipeDetail', {'recipeIndex': this._recipeIndex}]);
+        this._router.navigate(['RecipeDetail', {'recipeName': this._recipeName}]);
     }
 
     routerCanDeactivate(nextInstruction: ComponentInstruction, previousInstruction: ComponentInstruction) {
@@ -87,8 +89,8 @@ export class RecipeEditComponent implements OnInit{
         // if editing, populate controls with values
         if (this._editMode == 'edit') {
             // get values and set current recipe
-            this._recipeIndex = this._routeParams.get('recipeIndex');
-            this.recipe = this._recipeService.getSingleRecipe(+this._recipeIndex);
+            this._recipeName = this._routeParams.get('recipeName');
+            this.recipe = this._recipeService.getSingleRecipe(this._recipeName);
 
             // populate controlarray
             for (let i = 0; i < this.recipe.ingredients.length; i++) {
