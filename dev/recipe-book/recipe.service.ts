@@ -2,9 +2,9 @@
  * Created by eric on 5/6/16.
  */
 
-import {Injectable, EventEmitter} from 'angular2/core';
+import {Injectable, EventEmitter} from '@angular/core';
 import {Recipe} from "../shared/recipe.interface";
-import {Http, Headers} from "angular2/http";
+import {Http, Headers} from "@angular/http";
 import {Observable} from "rxjs/Observable";
 
 

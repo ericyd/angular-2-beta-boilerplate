@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component} from '@angular/core';
 import {Ingredient} from "../shared/ingredient.interface";
 import {ShoppingListService} from "../shared/shopping-list.service";
 

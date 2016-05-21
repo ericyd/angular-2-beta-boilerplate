@@ -1,6 +1,6 @@
-import {Component, OnInit} from 'angular2/core';
-import {ControlGroup, ControlArray, Control, Validators, FormBuilder} from "angular2/common";
-import {RouteParams, Router, ComponentInstruction} from "angular2/router";
+import {Component, OnInit} from '@angular/core';
+import {ControlGroup, ControlArray, Control, Validators, FormBuilder} from "@angular/common";
+import {RouteSegment, Router} from "@angular/router";
 import {Recipe} from "../shared/recipe.interface";
 import {RecipeService} from "./recipe.service";
 
@@ -16,7 +16,7 @@ export class RecipeEditComponent implements OnInit{
     private _submitted: boolean = false;
 
 
-    constructor(private _routeParams: RouteParams, private _recipeService: RecipeService,
+    constructor(private _routeSegment: RouteSegment, private _recipeService: RecipeService,
                 private _formBuilder: FormBuilder, private _router: Router) {}
 
     onAddItem(name: string, amount: string, units: string) {
@@ -67,10 +67,10 @@ export class RecipeEditComponent implements OnInit{
     }
 
     navigateBack() {
-        this._router.navigate(['RecipeDetail', {'recipeId': this._recipeId}]);
+        this._router.navigate(['./', this._recipeId]);
     }
 
-    routerCanDeactivate(nextInstruction: ComponentInstruction, previousInstruction: ComponentInstruction) {
+    routerCanDeactivate(nextInstruction, previousInstruction) {
         if (this._submitted || this.myForm.pristine) {
             return true;
         }
@@ -82,7 +82,7 @@ export class RecipeEditComponent implements OnInit{
         // create form on init
 
         // fetch from ruoter if editing or creating
-        this._editMode = this._routeParams.get('editMode');
+        this._editMode = this._routeSegment.getParam('editMode');
 
         let fbRecipeName = '';
         let fbRecipeImageUrl = '';
@@ -93,7 +93,7 @@ export class RecipeEditComponent implements OnInit{
         // if editing, populate controls with values
         if (this._editMode == 'edit') {
             // get values and set current recipe
-            this._recipeId = this._routeParams.get('recipeId');
+            this._recipeId = this._routeSegment.getParam('recipeId');
             this.recipe = this._recipeService.getCurrentRecipe();
 
             // populate controlarray

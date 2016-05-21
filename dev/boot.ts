@@ -1,8 +1,8 @@
 /// <reference path="../typings/browser.d.ts" />
-import {bootstrap} from 'angular2/platform/browser';
+import {bootstrap} from '@angular/platform-browser-dynamic';
 import {AppComponent} from "./app.component";
-import {ROUTER_PROVIDERS} from "angular2/router";
-import {HTTP_PROVIDERS} from "angular2/http";
+import {ROUTER_PROVIDERS} from "@angular/router";
+import {HTTP_PROVIDERS} from "@angular/http";
 import {AuthService} from "./shared/auth.service";
 
 // this is the root component that starts the whole application

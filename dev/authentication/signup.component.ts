@@ -1,6 +1,6 @@
-import {Component, OnInit} from 'angular2/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../shared/auth.service";
-import {ControlGroup, FormBuilder, Validators, Control} from "angular2/common";
+import {ControlGroup, FormBuilder, Validators, Control} from "@angular/common";
 
 @Component({
     templateUrl: 'templates/auth/authenticate-user.tpl.html',

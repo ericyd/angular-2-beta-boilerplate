@@ -1,7 +1,7 @@
-import {Component} from 'angular2/core';
+import {Component} from '@angular/core';
 import {RecipeListComponent} from "./recipe-list.component";
 import {RecipeService} from "./recipe.service";
-import {ROUTER_DIRECTIVES, RouteConfig} from "angular2/router";
+import {ROUTER_DIRECTIVES, Routes} from "@angular/router";
 import {RecipeDetailComponent} from "./recipe-detail.component";
 import {RecipeEditComponent} from "./recipe-edit.component";
 
@@ -20,16 +20,13 @@ import {RecipeEditComponent} from "./recipe-edit.component";
     providers: [RecipeService]
 })
 
-@RouteConfig([
+@Routes([
     {
         path: '/',
-        name: 'RecipeDetail',
         component: RecipeDetailComponent,
-        useAsDefault: true
     },
     {
-        path: '/:editMode',
-        name: 'RecipeEdit',
+        path: '/edit/:editMode',
         component: RecipeEditComponent
     },
 ])

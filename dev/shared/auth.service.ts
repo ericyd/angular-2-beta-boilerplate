@@ -2,11 +2,11 @@
  * Created by eric on 5/11/16.
  */
 
-import {Injectable, EventEmitter} from "angular2/core";
+import {Injectable, EventEmitter} from "@angular/core";
 import {User} from "./user.interface";
 import 'rxjs/Rx';
 import {Observable} from "rxjs/Observable";
-import {Router} from "angular2/router";
+import {Router} from "@angular/router";
 
 declare var Firebase:any;
 

@@ -1,5 +1,5 @@
-import {Component, OnInit} from 'angular2/core';
-import {Validators, FormBuilder, ControlGroup} from "angular2/common";
+import {Component, OnInit} from '@angular/core';
+import {Validators, FormBuilder, ControlGroup} from "@angular/common";
 import {AuthService} from "../shared/auth.service";
 
 @Component({

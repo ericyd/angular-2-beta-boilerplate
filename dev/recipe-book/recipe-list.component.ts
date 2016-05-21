@@ -1,7 +1,7 @@
-import {Component, OnInit} from 'angular2/core';
+import {Component, OnInit} from '@angular/core';
 import {RecipeService} from "./recipe.service";
 import {Recipe} from "../shared/recipe.interface";
-import {Router} from "angular2/router";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'my-recipe-list',
@@ -24,11 +24,11 @@ export class RecipeListComponent implements OnInit{
     constructor(private _recipeService: RecipeService, private _router: Router) {}
 
     onSelect(item: Recipe) {
-        this._router.navigate(['RecipeDetail', {'recipeId': item.id}]);
+        this._router.navigate(['./', item.id]);
     }
 
     onAddRecipe() {
-        this._router.navigate(['RecipeEdit', {'editMode': 'create'}]);
+        this._router.navigate(['edit', 'create']);
     }
 
     ngOnInit():any {

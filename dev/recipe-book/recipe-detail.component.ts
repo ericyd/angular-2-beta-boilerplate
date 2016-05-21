@@ -1,5 +1,5 @@
-import {Component, OnInit} from 'angular2/core';
-import {RouteParams, Router} from "angular2/router";
+import {Component, OnInit} from '@angular/core';
+import {RouteSegment, Router} from "@angular/router";
 import {RecipeService} from "./recipe.service";
 import {ShoppingListService} from "../shared/shopping-list.service";
 import {Recipe} from "../shared/recipe.interface";
@@ -13,12 +13,12 @@ export class RecipeDetailComponent implements OnInit {
     recipe: Recipe;
     private _recipeId: string;
 
-    constructor(private _routeParams: RouteParams, private _recipeService: RecipeService,
+    constructor(private _routeSegment: RouteSegment, private _recipeService: RecipeService,
                 private _router: Router, private _shoppingListService: ShoppingListService) {
     }
 
     onEdit() {
-        this._router.navigate(['RecipeEdit', {'editMode': 'edit', 'recipeId': this._recipeId}]);
+        this._router.navigate(['edit', 'edit', this._recipeId]);
     }
 
     onDelete() {
@@ -30,7 +30,7 @@ export class RecipeDetailComponent implements OnInit {
 
         this._recipeService.clearCurrentRecipe();
 
-        this._router.navigate(['RecipeDetail']);
+        this._router.navigate(['./']);
     }
 
     onAddToShoppingList() {
@@ -40,7 +40,7 @@ export class RecipeDetailComponent implements OnInit {
 
     ngOnInit():any {
 
-        this._recipeId = this._routeParams.get('recipeId');
+        this._recipeId = this._routeSegment.getParam('recipeId');
         
         this._recipeService.getSingleRecipe(this._recipeId).then(
             (resolve) => {

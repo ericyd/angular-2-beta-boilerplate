@@ -1,6 +1,6 @@
-import {Component, OnInit} from 'angular2/core';
+import {Component, OnInit} from '@angular/core';
 import {RecipesComponent} from "./recipe-book/recipes.component";
-import {RouteConfig, ROUTER_DIRECTIVES, Router} from "angular2/router";
+import {Routes, ROUTER_DIRECTIVES, Router} from "@angular/router";
 import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
 import {SignupComponent} from "./authentication/signup.component";
 import {LoginComponent} from "./authentication/login.component";
@@ -14,10 +14,10 @@ import {AuthService} from "./shared/auth.service";
         <header>
             <nav>
                 <ul>
-                    <li><a [routerLink]="['Recipes']">Recipes</a></li>
-                    <li><a [routerLink]="['ShoppingList']">Shopping List</a></li>
-                    <li *ngIf="!isAuth()"><a [routerLink]="['Signup']">Sign up</a></li>
-                    <li *ngIf="!isAuth()"><a [routerLink]="['Login']">Login</a></li>
+                    <li><a [routerLink]="['recipes']">Recipes</a></li>
+                    <li><a [routerLink]="['shopping-list']">Shopping List</a></li>
+                    <li *ngIf="!isAuth()"><a [routerLink]="['signup']">Sign up</a></li>
+                    <li *ngIf="!isAuth()"><a [routerLink]="['login']">Login</a></li>
                     <li *ngIf="isAuth()"><a (click)="logout()">Logout</a></li>
                 </ul>
             </nav>
@@ -32,26 +32,21 @@ import {AuthService} from "./shared/auth.service";
 
 })
 
-@RouteConfig([
+@Routes([
     {   // recall, the ellipsis allows for subrouting in this route
-        path: '/recipes/...',
-        name: 'Recipes',
-        component: RecipesComponent,
-        useAsDefault: true
+        path: '/recipes',
+        component: RecipesComponent
     },
     {
         path: '/shopping-list',
-        name: 'ShoppingList',
         component: ShoppingListComponent
     },
     {
         path: '/signup',
-        name: 'Signup',
         component: SignupComponent
     },
     {
         path: '/login',
-        name: 'Login',
         component: LoginComponent
     }
 ])
@@ -68,6 +63,6 @@ export class AppComponent implements OnInit {
     }
     
     ngOnInit(): any {
-        this._authService.getLogoutEvent().subscribe(() => this._router.navigate(['Recipes']));
+        this._authService.getLogoutEvent().subscribe(() => this._router.navigate(['recipes']));
     }
 }

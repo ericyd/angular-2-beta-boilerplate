@@ -1,7 +1,7 @@
 /**
  * Created by eric on 5/4/16.
  */
-import {Injectable} from 'angular2/core';
+import {Injectable} from '@angular/core';
 import {Ingredient} from "./ingredient.interface";
 import {SHOPPING_LIST} from "../mock/shopping-list";
 
